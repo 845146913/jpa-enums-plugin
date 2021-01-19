@@ -37,7 +37,7 @@ pom.xml添加repository
 </dependency>
 ```
 
-自动装配版本依赖，请自由选择：
+自动装配版本依赖<font color=red>（添加完成后不需要任何配置）</font>，请自由选择：
 ``` java
 <dependency>
     <groupId>com.silencew.plugins</groupId>
