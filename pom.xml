@@ -10,7 +10,7 @@
     </parent>-->
     <groupId>com.silencew.plugins</groupId>
     <artifactId>jpa-enums-plugin</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>jpa-enums-plugin</name>
     <description>Demo project for Maven</description>
 
