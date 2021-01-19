@@ -1,6 +1,8 @@
 # jpa-enums-plugin
 一个基于jpa的自定义枚举类转换插件，支持自定义枚举和数据库值的转换，以及枚举请求参数的转换
 
+注意：理论上目前spring-data-jpa和mybatis都支持此插件
+
 # 使用示例
 
 插件支持解析请求参数@RequestParam，@PathVariable的自定义枚举类转换，以及@RequestBody参数包含自定义枚举类的转换；
@@ -91,3 +93,7 @@ public class Demo {
     }
 }
 ```
+
+## 查看最新版本
+最新版本链接:
+https://gitee.com/wangshuip/mvn-repo/tree/master/com/silencew/plugins/jpa-enums-plugin
