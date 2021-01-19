@@ -94,6 +94,6 @@ public class Demo {
 }
 ```
 
-## 查看最新版本
+# 查看最新版本
 最新版本链接:
 https://gitee.com/wangshuip/mvn-repo/tree/master/com/silencew/plugins/jpa-enums-plugin
