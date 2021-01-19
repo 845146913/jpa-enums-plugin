@@ -7,7 +7,7 @@
 
 插件支持解析请求参数@RequestParam，@PathVariable的自定义枚举类转换，以及@RequestBody参数包含自定义枚举类的转换；
 
-## 1，maven 依赖
+## 1，maven 依赖 (分注解启动配置版本和starter自动装配版本)
 
 pom.xml添加repository
 ``` java
@@ -28,12 +28,21 @@ pom.xml添加repository
 ```
 
 引入最新依赖
-
+需要配置启动类(加@EnableParamEnumConfig)版本：
 ``` java
 <dependency>
     <groupId>com.silencew.plugins</groupId>
     <artifactId>jpa-enums-plugin</artifactId>
     <version>0.0.1</version>
+</dependency>
+```
+
+自动装配版本依赖，请自由选择：
+``` java
+<dependency>
+    <groupId>com.silencew.plugins</groupId>
+    <artifactId>silencew-enums-spring-boot-autoconfiguer</artifactId>
+    <version>1.0-SNAPSHOT</version>
 </dependency>
 ```
 
