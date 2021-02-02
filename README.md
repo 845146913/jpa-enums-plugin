@@ -1,7 +1,7 @@
 # jpa-enums-plugin
 一个基于jpa的自定义枚举类转换插件，支持自定义枚举和数据库值的转换，以及枚举请求参数的转换
 
-注意：理论上目前spring-data-jpa和mybatis都支持此插件
+注意：目前spring-data-jpa和mybatis都支持此插件
 
 # 使用示例
 
@@ -41,8 +41,8 @@ pom.xml添加repository
 ``` java
 <dependency>
     <groupId>com.silencew.plugins</groupId>
-    <artifactId>silencew-enums-spring-boot-autoconfiguer</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>silencew-enums-spring-boot-starter</artifactId>
+    <version>1.0</version>
 </dependency>
 ```
 
