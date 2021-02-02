@@ -47,6 +47,7 @@ pom.xml添加repository
 ```
 
 ## 2，项目配置
+PS：自动装配版本不需要配置config;以下为未自动装配配置;
 springboot的启动类上添加@EnableParamEnumConfig注解;
 ```java
 @SpringBootApplication
@@ -55,6 +56,7 @@ public class DemoApplication {
     // 省略...
 }
 ```
+## 3，使用Demo
 controller方法示例:
 ``` java
 @PostMapping("/test")
