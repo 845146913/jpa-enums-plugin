@@ -42,6 +42,7 @@ public class JsonEnumDeserializer extends JsonDeserializer<BaseEnum<?,?>> implem
                 if (Objects.equals(String.valueOf(e.getCode()), text)) {
                     return (BaseEnum<?,?>) e;
                 }
+                return (BaseEnum<?, ?>) Enum.valueOf(e.get().getClass(), text);
             } catch (Exception ex) {
                 log.error("获取枚举值错误!!! ", ex);
             }
