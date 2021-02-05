@@ -33,7 +33,7 @@ pom.xml添加repository
 <dependency>
     <groupId>com.silencew.plugins</groupId>
     <artifactId>jpa-enums-plugin</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
 </dependency>
 ```
 
@@ -42,7 +42,7 @@ pom.xml添加repository
 <dependency>
     <groupId>com.silencew.plugins</groupId>
     <artifactId>silencew-enums-spring-boot-starter</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
@@ -68,6 +68,8 @@ public String tset(@PathVariable Demo.Gender gender){
     return gender.toString();
 }
 ```
+<font color='red'>PS: 目前版本默认不需要给实体枚举类添加@JsonEnumDeserialize注解</font>
+
 @RequestBody参数实体的枚举类需要添加@JsonEnumDeserialize注解;
 ``` java
 @JsonEnumDeserialze
