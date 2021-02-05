@@ -20,7 +20,7 @@ import java.util.Objects;
  * date: 2020/12/31
  */
 @JsonComponent
-public class JsonEnumDeserializer<E extends Enum<E> & BaseEnum<E, T>, T> extends JsonDeserializer<E> implements ContextualDeserializer {
+public class JsonEnumDeserializer<E extends BaseEnum> extends JsonDeserializer<E> implements ContextualDeserializer {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private Class<E> clazz;
 
@@ -34,10 +34,10 @@ public class JsonEnumDeserializer<E extends Enum<E> & BaseEnum<E, T>, T> extends
             return null;
         }
         String text = jsonParser.getText();
-        BaseEnum<E, T>[] enumConstants = enumType.getEnumConstants();
+        BaseEnum[] enumConstants = enumType.getEnumConstants();
 
         // 将值与枚举对象对应并缓存
-        for (BaseEnum<E, T> e : enumConstants) {
+        for (BaseEnum e : enumConstants) {
             try {
                 if (Objects.equals(String.valueOf(e.getCode()), text)) {
                     return (E) e;
@@ -59,8 +59,7 @@ public class JsonEnumDeserializer<E extends Enum<E> & BaseEnum<E, T>, T> extends
     public JsonDeserializer<BaseEnum> createContextual(DeserializationContext ctx, BeanProperty property) {
         Class<?> rawCls = ctx.getContextualType().getRawClass();
         JsonEnumDeserializer converter = new JsonEnumDeserializer();
-        if (BaseEnum.class.isAssignableFrom(rawCls))
-            converter.setClazz(rawCls);
+        converter.setClazz(rawCls);
         return converter;
     }
 
