@@ -20,34 +20,38 @@ import java.util.Objects;
  * date: 2020/12/31
  */
 @JsonComponent
-public class JsonEnumDeserializer extends JsonDeserializer<BaseEnum<?,?>> implements ContextualDeserializer {
+public class JsonEnumDeserializer<E extends Enum<E> & BaseEnum<E, T>, T> extends JsonDeserializer<E> implements ContextualDeserializer {
     private final Logger log = LoggerFactory.getLogger(getClass());
-    private Class<BaseEnum<?,?>> clazz;
+    private Class<E> clazz;
 
     /**
      * ctx.getContextualType() 获取不到类信息
      */
     @Override
-    public BaseEnum<?,?> deserialize(JsonParser jsonParser, DeserializationContext ctx) throws IOException {
-        Class<BaseEnum<?,?>> enumType = clazz;
-        if (Objects.isNull(enumType) || !BaseEnum.class.isAssignableFrom(enumType)) {
+    public E deserialize(JsonParser jsonParser, DeserializationContext ctx) throws IOException {
+        Class<E> enumType = clazz;
+        if (Objects.isNull(enumType) || !enumType.isEnum()) {
+            log.info("Not enum maybe! :{}", enumType.getCanonicalName());
             return null;
         }
         String text = jsonParser.getText();
-        BaseEnum[] enumConstants = enumType.getEnumConstants();
+        return BaseEnum.class.isAssignableFrom(enumType) ?
+                getE(enumType, text, false) : getE(enumType, text, true);
+    }
 
-        // 将值与枚举对象对应并缓存
-        for (BaseEnum e : enumConstants) {
+    private E getE(Class<E> enumType, String text, boolean isSuperEnumClz) {
+        E[] enumConstants = enumType.getEnumConstants();
+
+        for (E e : enumConstants) {
             try {
-                if (Objects.equals(String.valueOf(e.getCode()), text)) {
-                    return (BaseEnum<?,?>) e;
+                String idx = isSuperEnumClz ? String.valueOf(e.ordinal()) : String.valueOf(e.getCode());
+                if (Objects.equals(idx, text)) {
+                    return e;
                 }
-                return (BaseEnum<?, ?>) Enum.valueOf(e.get().getClass(), text);
             } catch (Exception ex) {
-                log.error("获取枚举值错误!!! ", ex);
             }
         }
-        return null;
+        return Enum.valueOf(enumType, text);
     }
 
     /**
@@ -57,7 +61,7 @@ public class JsonEnumDeserializer extends JsonDeserializer<BaseEnum<?,?>> implem
      * @param property property
      */
     @Override
-    public JsonDeserializer<BaseEnum<?,?>> createContextual(DeserializationContext ctx, BeanProperty property) {
+    public JsonDeserializer<E> createContextual(DeserializationContext ctx, BeanProperty property) {
         Class<?> rawCls = ctx.getContextualType().getRawClass();
         JsonEnumDeserializer converter = new JsonEnumDeserializer();
         converter.setClazz(rawCls);
@@ -65,6 +69,6 @@ public class JsonEnumDeserializer extends JsonDeserializer<BaseEnum<?,?>> implem
     }
 
     public void setClazz(Class<?> clazz) {
-        this.clazz = (Class<BaseEnum<?,?>>) clazz;
+        this.clazz = (Class<E>) clazz;
     }
 }
