@@ -30,7 +30,7 @@ public class JsonEnumDeserializer<E extends Enum<E> & BaseEnum<E, T>, T> extends
     @Override
     public E deserialize(JsonParser jsonParser, DeserializationContext ctx) throws IOException {
         Class<E> enumType = clazz;
-        if (Objects.isNull(enumType) || !enumType.isEnum()) {
+        if (Objects.isNull(enumType) || !BaseEnum.class.isAssignableFrom(enumType)) {
             return null;
         }
         String text = jsonParser.getText();
@@ -56,11 +56,16 @@ public class JsonEnumDeserializer<E extends Enum<E> & BaseEnum<E, T>, T> extends
      * @param property property
      */
     @Override
-    public JsonDeserializer<Enum<?>> createContextual(DeserializationContext ctx, BeanProperty property) {
+    public JsonDeserializer<BaseEnum> createContextual(DeserializationContext ctx, BeanProperty property) {
         Class<?> rawCls = ctx.getContextualType().getRawClass();
         JsonEnumDeserializer converter = new JsonEnumDeserializer();
-        converter.setClazz(rawCls);
+        if (BaseEnum.class.isAssignableFrom(rawCls))
+            converter.setClazz(rawCls);
         return converter;
+    }
+
+    public static void main(String[] args) {
+
     }
 
     public void setClazz(Class<?> clazz) {
