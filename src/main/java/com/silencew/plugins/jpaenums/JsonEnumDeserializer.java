@@ -20,16 +20,16 @@ import java.util.Objects;
  * date: 2020/12/31
  */
 @JsonComponent
-public class JsonEnumDeserializer<E extends BaseEnum> extends JsonDeserializer<E> implements ContextualDeserializer {
+public class JsonEnumDeserializer extends JsonDeserializer<BaseEnum<?,?>> implements ContextualDeserializer {
     private final Logger log = LoggerFactory.getLogger(getClass());
-    private Class<E> clazz;
+    private Class<BaseEnum<?,?>> clazz;
 
     /**
      * ctx.getContextualType() 获取不到类信息
      */
     @Override
-    public E deserialize(JsonParser jsonParser, DeserializationContext ctx) throws IOException {
-        Class<E> enumType = clazz;
+    public BaseEnum<?,?> deserialize(JsonParser jsonParser, DeserializationContext ctx) throws IOException {
+        Class<BaseEnum<?,?>> enumType = clazz;
         if (Objects.isNull(enumType) || !BaseEnum.class.isAssignableFrom(enumType)) {
             return null;
         }
@@ -40,7 +40,7 @@ public class JsonEnumDeserializer<E extends BaseEnum> extends JsonDeserializer<E
         for (BaseEnum e : enumConstants) {
             try {
                 if (Objects.equals(String.valueOf(e.getCode()), text)) {
-                    return (E) e;
+                    return (BaseEnum<?,?>) e;
                 }
             } catch (Exception ex) {
                 log.error("获取枚举值错误!!! ", ex);
@@ -56,18 +56,14 @@ public class JsonEnumDeserializer<E extends BaseEnum> extends JsonDeserializer<E
      * @param property property
      */
     @Override
-    public JsonDeserializer<BaseEnum> createContextual(DeserializationContext ctx, BeanProperty property) {
+    public JsonDeserializer<BaseEnum<?,?>> createContextual(DeserializationContext ctx, BeanProperty property) {
         Class<?> rawCls = ctx.getContextualType().getRawClass();
         JsonEnumDeserializer converter = new JsonEnumDeserializer();
         converter.setClazz(rawCls);
         return converter;
     }
 
-    public static void main(String[] args) {
-
-    }
-
     public void setClazz(Class<?> clazz) {
-        this.clazz = (Class<E>) clazz;
+        this.clazz = (Class<BaseEnum<?,?>>) clazz;
     }
 }
