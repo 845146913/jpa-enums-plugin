@@ -3,6 +3,13 @@
 
 注意：目前spring-data-jpa和mybatis都支持此插件
 
++ [使用示例](#使用示例)
+    - [maven依赖](#1，maven-依赖-(分注解启动配置版本和starter自动装配版本))
+    - [项目配置](#2，项目配置)
+    - [使用Demo](#3，使用Demo)
++ [查看最新版本](#查看最新版本)
++ [发布日志](#发布日志)
+
 # 使用示例
 
 插件支持解析请求参数@RequestParam，@PathVariable的自定义枚举类转换，以及@RequestBody参数包含自定义枚举类的转换；
@@ -82,7 +89,8 @@ private Gender gender;
 @Table
 public class Demo {
     private Long id;
-
+    
+    // 0.0.2版本不需注解JsonEnumDeserialze
     @JsonEnumDeserialze
     @Convert(converter = GenderConvert.class)
     private Gender gender;
@@ -110,3 +118,13 @@ public class Demo {
 # 查看最新版本
 最新版本链接:
 https://gitee.com/wangshuip/mvn-repo/tree/master/com/silencew/plugins/jpa-enums-plugin
+
+# 发布日志
+## 0.0.2
+* 修复@RequestBody注解实体解析枚举名NAME时报错
+* 同时支持基础enum类和继承BaseEnum基类的枚举类实体的json与实体相互转换
+* @RequestBody注解的实体自定义枚举类不需要添加@JsonEnumDeserialze注解
+## 0.0.1
+* 支持数据库与Entity枚举相互转换
+* 支持请求参数@PathVariable，@RequestParam，@RequestBody的自定义枚举类解析转换
+* 添加jpa-enums-starter版本
