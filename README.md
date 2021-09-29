@@ -31,6 +31,14 @@ pom.xml添加repository
             <enabled>true</enabled>
         </snapshots>
     </repository>
+    <repository>
+        <id>silencew-repository</id>
+        <url>https://raw.github.com/845146913/mvn-repo/master</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+    </repository>
 </repositories>
 ```
 
