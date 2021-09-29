@@ -102,6 +102,8 @@ private Gender gender;
 public class Demo {
     private Long id;
     
+    //以下@Convert注解jpa数据库映射使用，非jpa不需要
+    @Convert(converter = GenderConvert.class)
     private Gender gender;
     // 省略getter,setter
 
@@ -119,6 +121,8 @@ public class Demo {
         public Integer getCode() {
             return this.code;
         }
+
+        // jpa映射数据库需要实现转换类，非jpa不需要
         public class GenderConvert extends BaseEnumConverter<Gender, Integer> {
 
         }
