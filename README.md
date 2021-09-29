@@ -157,6 +157,8 @@ public class Demo {
 https://gitee.com/wangshuip/mvn-repo/tree/master/com/silencew/plugins/jpa-enums-plugin
 
 # 发布日志
+## 0.0.3
+* 修复get方式传原生enum枚举不支持问题，推荐使用starter依赖
 ## 0.0.2
 * 修复@RequestBody注解实体解析枚举名NAME时报错
 * 同时支持基础enum类和继承BaseEnum基类的枚举类实体的json与实体相互转换
