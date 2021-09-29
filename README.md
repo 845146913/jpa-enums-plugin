@@ -102,11 +102,10 @@ private Gender gender;
 public class Demo {
     private Long id;
     
-    // 0.0.2版本不需注解JsonEnumDeserialze
-    @JsonEnumDeserialze
-    @Convert(converter = GenderConvert.class)
     private Gender gender;
     // 省略getter,setter
+
+    // 自定义枚举类code=>Enum【如1=>MAN】需要继承BaseEnum基类
     public enum Gender implements BaseEnum<Gender, Integer> {
         MAN(1),
         WOMAN(2);
@@ -124,6 +123,20 @@ public class Demo {
 
         }
     }
+
+    // 原始enum支持，0=>LINUX,1=>WINDOWS
+    public enum WindowType {
+        LINUX(0),
+        WINDOWS(1);
+        private int code;
+        WindowType(int code) {
+            this.code = code;
+        }
+        public int getCode() {
+            return this.code;
+        }
+    }
+
 }
 ```
 
