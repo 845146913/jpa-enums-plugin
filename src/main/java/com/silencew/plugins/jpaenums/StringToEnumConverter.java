@@ -12,13 +12,14 @@ import java.util.Objects;
  * author: wangshuiping
  * date: 2020/12/30
  */
-public class StringToEnumConverter<E extends BaseEnum<?, String>> implements Converter<String, E> {
+public class StringToEnumConverter<E extends Enum<E> & BaseEnum<?, String>> implements Converter<String, E> {
     private Map<String, E> enumMap = new HashMap<>();
 
-    public StringToEnumConverter(Class<E> enumType) {
+
+    public <T extends E> StringToEnumConverter(Class<T> enumType) {
         E[] enums = enumType.getEnumConstants();
         for (E e : enums) {
-            enumMap.put(String.valueOf(e.getCode()), e);
+            enumMap.put(String.valueOf(e instanceof BaseEnum ? e.getCode() : e.ordinal()), e);
         }
     }
 

@@ -40,7 +40,7 @@ pom.xml添加repository
 <dependency>
     <groupId>com.silencew.plugins</groupId>
     <artifactId>jpa-enums-plugin</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
 </dependency>
 ```
 
@@ -49,7 +49,7 @@ pom.xml添加repository
 <dependency>
     <groupId>com.silencew.plugins</groupId>
     <artifactId>silencew-enums-spring-boot-starter</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
@@ -66,14 +66,26 @@ public class DemoApplication {
 ## 3，使用Demo
 controller方法示例:
 ``` java
-@PostMapping("/test")
-public String test(@RequestBody Demo param) {
-    return "ok" + param.getGender();
-}
-@GetMapping("/pt/{gender}")
-public String tset(@PathVariable Demo.Gender gender){
-    return gender.toString();
-}
+    @PostMapping("/test")
+    public String test(@RequestBody Demo param) {
+        return "ok" + param.toString() + " scope:"+scope;
+    }
+    @GetMapping("/pt/{gender}")
+    public String tset(@PathVariable Demo.Gender gender){
+        return gender.toString();
+    }
+    @GetMapping("/pt")
+    public String tset( Demo.WindowType type){
+        return type.toString();
+    }
+    @GetMapping("/pt/w/{type}")
+    public String tset1(@PathVariable Demo.WindowType type){
+        return type.toString();
+    }
+    @GetMapping("/pt/d")
+    public String tset2(Demo type){
+        return type.toString();
+    }
 ```
 <font color='red'>PS: 目前版本默认不需要给实体枚举类添加@JsonEnumDeserialize注解</font>
 

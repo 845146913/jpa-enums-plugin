@@ -20,7 +20,7 @@ public class StringToEnumWrapConverterFactory<E extends Enum<E> & BaseEnum<E, St
     public <T extends E> Converter<String, T> getConverter(Class<T> aClass) {
         Converter<String, T> converter = CONVERTERS.get(aClass);
         if (converter == null) {
-            converter = new StringToEnumConverter<>(aClass);
+            converter = new StringToEnumConverter(aClass);
             CONVERTERS.put(aClass, converter);
         }
         return converter;
