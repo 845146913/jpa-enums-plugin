@@ -26,9 +26,9 @@ public class StringToEnumConverter<E extends Enum<E> & BaseEnum<?, String>> impl
     @Override
     public E convert(String code) {
         E e = enumMap.get(code);
-        if (Objects.isNull(e)) {
-            throw new IllegalArgumentException("无法匹配对应的枚举类型");
-        }
+        //if (Objects.isNull(e)) {
+        //    throw new IllegalArgumentException("无法匹配对应的枚举类型");
+        //}
         return e;
     }
 }
