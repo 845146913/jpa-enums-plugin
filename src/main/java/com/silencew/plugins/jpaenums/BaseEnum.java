@@ -49,8 +49,9 @@ public interface BaseEnum<E extends Enum<E>, T> {
             }
 
         }
-        throw new IllegalArgumentException(
-                "No enum constant " + clazz.getName() + "." + code);
+        //throw new IllegalArgumentException(
+        //        "No enum constant " + clazz.getName() + "." + code);
+        return null;
     }
 
     static <E extends Enum<E> & BaseEnum<E, T>, T> List<T> codes(Class<E> clazz) {
