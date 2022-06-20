@@ -63,8 +63,9 @@ public class JsonEnumDeserializer<E extends Enum<E> & BaseEnum<E, T>, T> extends
     @Override
     public JsonDeserializer<E> createContextual(DeserializationContext ctx, BeanProperty property) {
         Class<?> rawCls = ctx.getContextualType().getRawClass();
-        this.setClazz(rawCls);
-        return this;
+        JsonEnumDeserializer converter = new JsonEnumDeserializer();
+        converter.setClazz(rawCls);
+        return converter;
     }
 
     public void setClazz(Class<?> clazz) {
