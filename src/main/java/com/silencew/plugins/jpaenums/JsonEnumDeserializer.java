@@ -35,8 +35,7 @@ public class JsonEnumDeserializer<E extends Enum<E> & BaseEnum<E, T>, T> extends
             return null;
         }
         String text = jsonParser.getText();
-        return BaseEnum.class.isAssignableFrom(enumType) ?
-                getE(enumType, text, false) : getE(enumType, text, true);
+        return getE(enumType, text, !BaseEnum.class.isAssignableFrom(enumType));
     }
 
     private E getE(Class<E> enumType, String text, boolean isSuperEnumClz) {
@@ -51,7 +50,7 @@ public class JsonEnumDeserializer<E extends Enum<E> & BaseEnum<E, T>, T> extends
             } catch (Exception ex) {
             }
         }
-        return Enum.valueOf(enumType, text);
+        return isSuperEnumClz ? Enum.valueOf(enumType, text) : null;
     }
 
     /**
