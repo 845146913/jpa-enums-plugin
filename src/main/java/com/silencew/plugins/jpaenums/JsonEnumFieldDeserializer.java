@@ -20,7 +20,7 @@ import java.util.Objects;
  * date: 2020/12/31
  */
 @JsonComponent
-public class JsonEnumDeserializer<E extends Enum<E> & BaseEnum<E, T>, T> extends JsonDeserializer<E> implements ContextualDeserializer {
+public class JsonEnumFieldDeserializer<E extends Enum<E> & BaseEnum<E, T>, T> extends JsonDeserializer<E> implements ContextualDeserializer {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private Class<E> clazz;
 
@@ -44,13 +44,17 @@ public class JsonEnumDeserializer<E extends Enum<E> & BaseEnum<E, T>, T> extends
         for (E e : enumConstants) {
             try {
                 String idx = isSuperEnumClz ? String.valueOf(e.ordinal()) : String.valueOf(e.getCode());
-                if (Objects.equals(idx, text)) {
+                if (Objects.equals(idx, text) || e.name().equalsIgnoreCase(text)) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("requestBody enum field:{} read from json field:{}", e, text);
+                    }
                     return e;
                 }
-            } catch (Exception ex) {
+            } catch (Exception ignored) {
             }
         }
-        return isSuperEnumClz ? Enum.valueOf(enumType, text) : null;
+        log.warn("no enum constant {}.{}", enumType.getCanonicalName(), text);
+        return null;
     }
 
     /**
@@ -62,11 +66,12 @@ public class JsonEnumDeserializer<E extends Enum<E> & BaseEnum<E, T>, T> extends
     @Override
     public JsonDeserializer<E> createContextual(DeserializationContext ctx, BeanProperty property) {
         Class<?> rawCls = ctx.getContextualType().getRawClass();
-        JsonEnumDeserializer converter = new JsonEnumDeserializer();
+        JsonEnumFieldDeserializer<E,?> converter = new JsonEnumFieldDeserializer<>();
         converter.setClazz(rawCls);
         return converter;
     }
 
+    @SuppressWarnings("unchecked")
     public void setClazz(Class<?> clazz) {
         this.clazz = (Class<E>) clazz;
     }

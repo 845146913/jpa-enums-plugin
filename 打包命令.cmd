@@ -1,1 +1,1 @@
-mvn deploy -DaltDeploymentRepository=silencew-maven::default::file://D:/ide/mvn-repo -Dmaven.test.skip=true
+mvn deploy -DaltDeploymentRepository=silencew-maven::default::file://D:/study/java/mvn-repo -Dmaven.test.skip=true

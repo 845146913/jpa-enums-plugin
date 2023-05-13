@@ -16,6 +16,6 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.TYPE, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-@JsonDeserialize(using = JsonEnumDeserializer.class)
+@JsonDeserialize(using = JsonEnumFieldDeserializer.class)
 public @interface JsonEnumDeserialze {
 }

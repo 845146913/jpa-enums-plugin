@@ -12,17 +12,17 @@ import java.util.concurrent.ConcurrentHashMap;
  * author: wangshuiping
  * date: 2020/12/30
  */
-public class StringToEnumWrapConverterFactory<E extends Enum<E> & BaseEnum<E, String>> implements ConverterFactory<String, E> {
-    private static final Map<Class, Converter> CONVERTERS = new ConcurrentHashMap<>();
+public class StringToEnumWrapConverterFactory<E extends BaseEnum<?, String>> implements ConverterFactory<String, E> {
+    private final Map<Class<E>, Converter<String, E>> CONVERTERS = new ConcurrentHashMap<>();
 
     @Override
     @SuppressWarnings("unchecked")
     public <T extends E> Converter<String, T> getConverter(Class<T> aClass) {
-        Converter<String, T> converter = CONVERTERS.get(aClass);
+        Converter<String, E> converter = CONVERTERS.get(aClass);
         if (converter == null) {
-            converter = new StringToEnumConverter(aClass);
-            CONVERTERS.put(aClass, converter);
+            converter = new StringToEnumConverter<>(aClass);
+            CONVERTERS.put((Class<E>) aClass, converter);
         }
-        return converter;
+        return (Converter<String, T>) converter;
     }
 }

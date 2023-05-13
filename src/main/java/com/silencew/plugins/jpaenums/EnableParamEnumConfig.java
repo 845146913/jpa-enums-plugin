@@ -13,6 +13,6 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import(JsonEnumConfig.class)
+@Import(WeFormatGetParamEnumConfig.class)
 public @interface EnableParamEnumConfig {
 }

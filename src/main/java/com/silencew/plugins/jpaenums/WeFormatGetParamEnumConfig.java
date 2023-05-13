@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ComponentScan(basePackages = {"com.silencew.plugins.jpaenums"})
-public class JsonEnumConfig implements WebMvcConfigurer {
+public class WeFormatGetParamEnumConfig implements WebMvcConfigurer {
 
     @Override
     public void addFormatters(FormatterRegistry registry) {

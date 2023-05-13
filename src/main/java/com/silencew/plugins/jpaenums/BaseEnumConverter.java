@@ -4,12 +4,12 @@ import javax.persistence.AttributeConverter;
 import java.lang.reflect.ParameterizedType;
 
 /**
- * 通用数据库枚举转换
+ * 通用数据库枚举转换，针对继承自BaseEnum的有效
  * Created by IntelliJ IDEA.
  * author: wangshuiping
  * date: 2020/12/30
  */
-public abstract class BaseEnumConverter<E extends Enum<E> & BaseEnum<E, T>, T> implements AttributeConverter<E, T> {
+public abstract class BaseEnumConverter<E extends BaseEnum<?, T>, T> implements AttributeConverter<E, T> {
 
     @Override
     public T convertToDatabaseColumn(E e) {

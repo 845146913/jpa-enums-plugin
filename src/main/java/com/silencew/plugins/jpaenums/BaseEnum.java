@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -28,33 +29,21 @@ public interface BaseEnum<E extends Enum<E>, T> {
     }
 
 
-    @SuppressWarnings("unchecked")
-    static <E extends Enum<E> & BaseEnum<E, T>, T> E codeOf(Class<E> clazz, T code) {
+    static <E extends BaseEnum<?, T>, T> E codeOf(Class<E> clazz, T code) {
+        return codeOfOptional(clazz, code).orElse(null);
+    }
+    static <E extends BaseEnum<?, T>, T> Optional<E> codeOfOptional(Class<E> clazz, T code) {
         if (null == code || "".equals(code))
-            return null;
-        int count = 0;
-        try {
-            for (Field f : clazz.getDeclaredFields()) {
-                if (!f.isEnumConstant() && !f.getType().getTypeName().contains(clazz.getName()))
-                    count++;
-            }
-        } catch (SecurityException e1) {
-            e1.printStackTrace();
-        }
+            return Optional.empty();
         for (E e : clazz.getEnumConstants()) {
-            if (count > 0) {
-                E o = e;
-                if (Objects.equals(o.getCode(), code))
-                    return e;
-            }
-
+            if (Objects.equals(e.getCode(), code))
+                return Optional.of(e);
         }
-        throw new IllegalArgumentException(
-                "No enum constant " + clazz.getName() + "." + code);
+        return Optional.empty();
     }
 
     static <E extends Enum<E> & BaseEnum<E, T>, T> List<T> codes(Class<E> clazz) {
         E[] enumConstants = clazz.getEnumConstants();
-        return Arrays.asList(enumConstants).stream().map(E::getCode).collect(Collectors.toList());
+        return Arrays.stream(enumConstants).map(E::getCode).collect(Collectors.toList());
     }
 }
